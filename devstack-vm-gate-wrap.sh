@@ -255,6 +255,9 @@ export OVERRIDE_ZUUL_BRANCH=${OVERRIDE_ZUUL_BRANCH:-$ZUUL_BRANCH}
 if ! function_exists "gate_hook"; then
   # the command we use to run the gate
   function gate_hook {
+	sed -i '/function setup_localrc/i \
+rm -rf \/opt\/stack\/new\/devstack \
+git clone https:\/\/github.com\/alekseychuprin\/devstack.git \/opt\/stack\/new\/devstack' /opt/stack/new/devstack-gate/devstack-vm-gate.sh
     remaining_time
     timeout -s 9 ${REMAINING_TIME}m $BASE/new/devstack-gate/devstack-vm-gate.sh
   }
